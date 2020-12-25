@@ -6,9 +6,6 @@ import pandas as pd
 import quantstats
 
 
-
-
-
 # Instantiate Cerebro engine
 cerebro = bt.Cerebro()
 
@@ -24,23 +21,6 @@ data1 = bt.feeds.YahooFinanceData(
 
 cerebro.adddata(data1)
 
-# data2 = bt.feeds.GenericCSVData(
-#     dataname='multiTimeline.csv',
-#     fromdate=datetime.datetime(2017, 1, 1),
-#     todate=datetime.datetime(2020, 12, 19),
-#     nullvalue=0.0,
-#     dtformat=('%Y-%m-%d'),
-#     datetime=0,
-#     time=-1,
-#     high=-1,
-#     low=-1,
-#     open=-1,
-#     close=1,
-#     volume=-1,
-#     openinterest=-1,
-#     timeframe=bt.TimeFrame.Days)
-
-# cerebro.adddata(data2)
 
 # Add strategy to Cerebro
 cerebro.addstrategy(MAcrossover)
@@ -50,20 +30,30 @@ cerebro.addsizer(bt.sizers.SizerFix, stake=3)
 
 if __name__ == '__main__':
     # Run Cerebro Engine
+
+    # import analyzer 
     cerebro.addanalyzer(bt.analyzers.PyFolio, _name='PyFolio')
 
+    # get the banlance of broker account
     start_portfolio_value = cerebro.broker.getvalue()
 
-    cerebro.run()
+    # set the commission
+    cerebro.broker.setcommission(commission=0.0)
+
+    cerebro.run(maxcpus=-1)
     results = cerebro.run()
     strat = results[0]
 
+
+    # get the final banlance
     end_portfolio_value = cerebro.broker.getvalue()
+    # calculate the profot and loss
     pnl = end_portfolio_value - start_portfolio_value
     print(f'Starting Portfolio Value: {start_portfolio_value:2f}')
     print(f'Final Portfolio Value: {end_portfolio_value:2f}')
     print(f'PnL: {pnl:.2f}')
     
+    # record performance and save as log file
     portfolio_stats = strat.analyzers.getbyname('PyFolio')
     returns, positions, transactions, gross_lev = portfolio_stats.get_pf_items()
     returns.index = returns.index.tz_convert(None)
