@@ -1,0 +1,16 @@
+codecov:
+  branch: master
+
+comment: false
+
+coverage:
+  status:
+    project:
+      default:
+        target: '82'
+    patch:
+      default:
+        target: '50'
+
+github_checks:
+    annotations: false

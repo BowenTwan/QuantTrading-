@@ -10,6 +10,7 @@ import sys  # To find out the script name (in argv[0])
 import backtrader as bt
 from backtrader import plot
 
+# strategy1_MAcrossover
 class MAcrossover(bt.Strategy): 
     # Moving average parameters
     params = (('pfast',20),('pslow',50),)
@@ -101,10 +102,12 @@ class MAcrossover(bt.Strategy):
 
 
 
-
+#Strategy2_TestStrategy
+#open position when stock close above the SMA20
+#cloe position when stock close below the SMA20
 class TestStrategy(bt.Strategy):
     params = (
-        ('maperiod', 15),
+        ('maperiod', 20),
         ('printlog', False),
     )
 
@@ -194,10 +197,11 @@ class TestStrategy(bt.Strategy):
                 # Keep track of the created order to avoid a 2nd order
                 self.order = self.sell()
 
-    def stop(self):
-        self.log('(MA Period %2d) Ending Value %.2f' %
-                 (self.params.maperiod, self.broker.getvalue()), doprint=True)
 
+
+
+# Strategy3_AverageTureRange
+#
 class AverageTrueRange(bt.Strategy):
     
 	def log(self, txt, dt=None):
