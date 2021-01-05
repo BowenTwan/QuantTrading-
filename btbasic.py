@@ -115,12 +115,13 @@ if __name__ == '__main__':
     # Add a strategy
     strats = cerebro.optstrategy(
         TestStrategy,
-        maperiod=range(10, 31))
+        maperiod=range(10, 31)
+        )
 
     # Datas are in a subfolder of the samples. Need to find where the script is
     # because it could have been called from anywhere
-    modpath = os.path.dirname(os.path.abspath(sys.argv[0]))
-    datapath = os.path.join(modpath, '../../datas/orcl-1995-2014.txt')
+    # modpath = os.path.dirname(os.path.abspath(sys.argv[0]))
+    # datapath = os.path.join(modpath, '../../datas/orcl-1995-2014.txt')
 
     # Create a Data Feed
     data = bt.feeds.YahooFinanceCSVData(
@@ -130,7 +131,8 @@ if __name__ == '__main__':
         # Do not pass values before this date
         todate=datetime.datetime(2000, 12, 31),
         # Do not pass values after this date
-        reverse=False)
+        reverse=False
+        )
 
     # Add the Data Feed to Cerebro
     cerebro.adddata(data)
@@ -142,7 +144,10 @@ if __name__ == '__main__':
     cerebro.addsizer(bt.sizers.FixedSize, stake=10)
 
     # Set the commission
-    cerebro.broker.setcommission(commission=0.0)
+    cerebro.broker.setcommission(commission=0.01)
 
     # Run over everything
-    cerebro.run(maxcpus=1)
+    cerebro.run()
+
+    #plot
+    cerebro.plot()
