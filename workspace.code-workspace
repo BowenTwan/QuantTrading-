@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../Backtrader-for-backtesting-main"
+		},
+		{
+			"path": "../../../2130_Code/Python/Python-for-Finance-Repo-master/pythontest"
+		}
+	],
+	"settings": {
+		"python.pythonPath": "/Users/bowenduan/anaconda3/envs/quantiacsbox/bin/python"
+	}
+}

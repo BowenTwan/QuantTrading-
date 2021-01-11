@@ -1,11 +1,10 @@
+from Strategies.MA20crossover import TestStrategy
 import datetime
 
 import backtrader as bt
 import pandas as pd
 import quantstats
 from backtrader.dataseries import TimeFrame
-
-from strategies import *
 
 # Instantiate Cerebro engine
 cerebro = bt.Cerebro()
