@@ -13,7 +13,7 @@ from backtrader import plot
 # strategy1_MAcrossover
 class MAcrossover(bt.Strategy): 
     # Moving average parameters
-    params = (('pfast',20),('pslow',50),)
+    params = (('pfast',5),('pslow',20),)
 
     def __init__(self):
         # create a list to store the log data 
@@ -44,23 +44,42 @@ class MAcrossover(bt.Strategy):
             # Attention: broker could reject order if not enough cash
         if order.status in [order.Completed]:
             if order.isbuy():
-                self.log(f'BUY EXECUTED, {order.executed.price:.2f}')
-            elif order.issell():
-                self.log(f'SELL EXECUTED, {order.executed.price:.2f}')
+                self.log('Buy Executed, Price: %.2f, Cost: %.2f, Comm %.2f' %
+                         (order.executed.price,
+                          order.executed.value,
+                          order.executed.comm)
+                         )
+            else:
+                self.log('Sell Executed, Price: %.2f, Cost: %.2f, Comm %.2f' %
+                         (order.executed.price,
+                          order.executed.value,
+                          order.executed.comm))
+                
             self.bar_executed = len(self)
+            
         elif order.status in [order.Canceled, order.Margin, order.Rejected]:
             self.log('Order Canceled/Margin/Rejected')
 
         # Reset orders
         self.order = None
+        
+    def notify_trade(self, trade):
+        if not trade.isclosed:
+            return
+        self.log(f'Operation Profit, Gross {trade.pnl:.2f}, NET {trade.pnlcomm:.2f}')
+
 
     def next(self):
+        
+        #* logging the daily close price 
+        # self.log(f'Close price {self.dataclose[0]:.2f}')
     	# Check for open orders
         if self.order:
             return
 
 	# Check if we are in the market
         if not self.position:
+            
             # We are not in the market, look for a signal to OPEN trades
                 
             #If the 20 SMA is above the 50 SMA
@@ -77,18 +96,18 @@ class MAcrossover(bt.Strategy):
               #  self.order = self.sell()
 
              if self.fast_sma[0] > self.slow_sma[0] and self.fast_sma[-1] < self.slow_sma[-1]:
-                 self.log(f'BUY CREATE {self.dataclose[0]:2f}')
+                 self.log(f'Buy Created {self.dataclose[0]:2f}')
                  # Keep track of the created order to avoid a 2nd order
                  self.order = self.buy()
              #Otherwise if the 20 SMA is below the 50 SMA   
              elif self.fast_sma[0] < self.slow_sma[0] and self.fast_sma[-1] > self.slow_sma[-1]:
-                 self.log(f'SELL CREATE {self.dataclose[0]:2f}')
+                 self.log(f'Sell Created {self.dataclose[0]:2f}')
                  # Keep track of the created order to avoid a 2nd order
                  self.order = self.sell()
         else:
             # We are already in the market, look for a signal to CLOSE trades
             if len(self) >= (self.bar_executed + 5):
-                self.log(f'CLOSE CREATE {self.dataclose[0]:2f}')
+                self.log(f'Close Created {self.dataclose[0]:2f}')
                 self.order = self.close()
 
     #def stop(self):
@@ -96,5 +115,5 @@ class MAcrossover(bt.Strategy):
                  #(self.params.pfast, self.params.pslow, self.broker.getvalue()), doprint=True)
     def stop(self):
         with open('custom_log.csv', 'w') as e:
-            for line in self.log_file:
+            for line in self.log_pnl:
                 e.write(line + '\n')

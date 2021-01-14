@@ -4,23 +4,24 @@ from __future__ import (absolute_import, division, print_function,
 import datetime  # For datetime objects
 import os.path  # To manage paths
 import sys  # To find out the script name (in argv[0])
-from Strategies.MA20crossover import TestStrategy
+from Strategies.Harami import harami
 
 # Import the backtrader platform
 import backtrader as bt
 
 
 if __name__ == '__main__':
+    
     # Create a cerebro entity
     cerebro = bt.Cerebro()
 
-    #Add a strategy
+    #* Add a strategy
     # strats = cerebro.optstrategy(
     #     TestStrategy,
     #     maperiod=range(10, 31)
     #     )
 
-    cerebro.addstrategy(TestStrategy)
+    cerebro.addstrategy(harami)
 
     # Datas are in a subfolder of the samples. Need to find where the script is
     # because it could have been called from anywhere
@@ -50,16 +51,26 @@ if __name__ == '__main__':
     cerebro.adddata(data)
 
     # Set our desired cash start
-    cerebro.broker.setcash(10000.0)
+    cerebro.broker.setcash(100000.0)
 
     # Add a FixedSize sizer according to the stake
-    cerebro.addsizer(bt.sizers.FixedSize, stake=100)
+    cerebro.addsizer(bt.sizers.FixedSize, stake=1000)
 
     # Set the commission
-    cerebro.broker.setcommission(commission=0.01)
+    cerebro.broker.setcommission(commission=0.0002)
+    
+    principle = cerebro.broker.getvalue()
+    print(f'Starting Portfolio Value: , {principle:.2f}')
 
     # Run over everything
     cerebro.run()
-
+    
+    banlance = cerebro.broker.getvalue()
+    print(f'Ending Portfolio Value: {banlance:.2f}') 
+    pnl = banlance - principle
+    RR = pnl/principle
+    print(f'Profit/Loss: {pnl:.2f}')
+    print(f'Return Rate: {RR*100:.2f}%')
+    
     #plot
     cerebro.plot()

@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../VNPY"
+		},
+		{
+			"path": "../../../../../../anaconda3/envs/test-vnpy"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {}
+}
