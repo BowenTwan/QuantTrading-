@@ -90,7 +90,7 @@ class harami(bt.Strategy):
             
         else:
             #condition = (self.dataclose[0] - self.bar_executed_close) / self.dataclose[0]
-            condition = self.bar_executed
+            condition = len(self) - self.bar_executed
             #if condition >0.1 or condition< 0.1:
             if condition > 5:
                 self.log(f'Sell Created {self.dataclose[0]:.2f}')

@@ -10,5 +10,7 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"python.pythonPath": "/Users/bowenduan/anaconda3/envs/Python/bin/python"
+	}
 }
