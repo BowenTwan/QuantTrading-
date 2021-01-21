@@ -4,11 +4,14 @@ from __future__ import (absolute_import, division, print_function,
 import datetime  # For datetime objects
 import os.path  # To manage paths
 import sys  # To find out the script name (in argv[0])
-from Strategies.Harami import harami
+from Strategies.MA20crossover import TestStrategy
 
 # Import the backtrader platform
 import backtrader as bt
 
+# better plotting and results analys
+from backtrader_plotting import Bokeh
+from backtrader_plotting.schemes import blackly, Tradimo
 
 if __name__ == '__main__':
     
@@ -21,7 +24,7 @@ if __name__ == '__main__':
     #     maperiod=range(10, 31)
     #     )
 
-    cerebro.addstrategy(harami)
+    cerebro.addstrategy(TestStrategy)
 
     # Datas are in a subfolder of the samples. Need to find where the script is
     # because it could have been called from anywhere
@@ -73,4 +76,5 @@ if __name__ == '__main__':
     print(f'Return Rate: {RR*100:.2f}%')
     
     #plot
-    cerebro.plot()
+    b = Bokeh(style='bar', plot_mode='single')
+    cerebro.plot(b)

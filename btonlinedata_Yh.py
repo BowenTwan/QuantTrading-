@@ -33,7 +33,7 @@ if __name__ == '__main__':
     # Run Cerebro Engine
 
     # import analyzer 
-    cerebro.addanalyzer(bt.analyzers.PyFolio, _name='PyFolio')
+    # cerebro.addanalyzer(bt.analyzers.PyFolio, _name='PyFolio')
 
     # get the banlance of broker account
     start_portfolio_value = cerebro.broker.getvalue()
@@ -61,5 +61,5 @@ if __name__ == '__main__':
     # returns.index = returns.index.tz_convert(None)
     # quantstats.reports.html(returns, output='stats.html', title='BTC Sentiment')
     # cerebro.addwriter(bt.WriterFile, csv=True, out='log.csv')
-    
-    #cerebro.plot()
+
+    # cerebro.plot()

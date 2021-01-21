@@ -14,7 +14,6 @@ class MACD(bt.Strategy):
 
     def __init__(self):
         
-
         # create a list to store the log data 
         self.log_pnl = []
         self.dataclose = self.datas[0].close

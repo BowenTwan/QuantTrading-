@@ -28,17 +28,18 @@ print(f'stock list downloaded')
 print(f'starting to dowmload daily data up to {today}')
 i = 0
 
-col = ['trade_date','open','high','low','close','vol','amount']
+col = ['ts_code','trade_date','open','high','low','close','vol','amount']
 
 for stock_code in stock_list['ts_code']:
     try: 
         stock_data = pro.daily(ts_code=stock_code, start_date='20190101', end_date=today)
         file_name = f'{save_path}{stock_code}.csv'
-        stock_data[col].to_csv(file_name, index=False)
+        stock_price_data = stock_data[col].copy()
+        stock_price_data.sort_values(by= 'trade_date', ascending = True).to_csv(file_name, index=False)
         i = i + 1
         
     except:
-         print('some error')
+         print(f'{stock_code} downlaoding data failed')
         
 print(f'downloading complete, {i} stocks dowlanded')
 

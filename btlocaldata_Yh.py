@@ -54,4 +54,4 @@ if __name__ == '__main__':
     cerebro.run()
 
     #plot
-    cerebro.plot()
+    cerebro.plot(style = "candlestick")
