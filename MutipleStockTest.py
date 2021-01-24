@@ -6,6 +6,9 @@ import sys
 import backtrader as bt
 import pandas as pd
 
+# better plotting and results analys
+from backtrader_plotting import Bokeh
+from backtrader_plotting.schemes import blackly, Tradimo
 
 MIN_PERIOD = 30
 stk_num = 10  # number of stocks needed back testing
@@ -102,4 +105,7 @@ cerebro.addstrategy(SmaCross, poneplot = False)
 cerebro.run()  
 
 print('Final Portfolio Value: %.2f' % cerebro.broker.getvalue())
-cerebro.plot(style = "candlestick")  
+# cerebro.plot(style = "candlestick")  
+#plot
+b = Bokeh(style='bar', plot_mode='single')
+cerebro.plot(b)
