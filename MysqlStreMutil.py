@@ -1,3 +1,10 @@
+'''
+Data Source: MySql
+Num of back testing stock: Mutiple 
+Need to Specify stock pools
+'''
+
+
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 

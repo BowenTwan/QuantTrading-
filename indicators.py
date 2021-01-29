@@ -1,3 +1,8 @@
+'''
+calculate indicators
+and then the indicator will plot on final figuers 
+'''
+
 import backtrader as bt
 
 class AverageTrueRange(bt.Strategy):

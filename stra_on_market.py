@@ -1,5 +1,5 @@
-"""
-1. This script is used to apply strategy on mutiple stock for back testing
+""" 
+1. This script is used to apply strategy on mutiple stock for back testing sepetately
 2. The backtesting results will be saved 
 3. Back testing data is uploaded localy 
 """

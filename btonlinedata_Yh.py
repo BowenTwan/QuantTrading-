@@ -1,3 +1,8 @@
+'''
+Data Source: Yahoo Online
+Num of back testing stock: one 
+'''
+
 from Strategies.MA20crossover import TestStrategy
 import datetime
 

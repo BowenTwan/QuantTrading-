@@ -1,3 +1,8 @@
+'''
+Reusable Calculating Function for MySql Date
+'''
+
+
 import mysql.connector as mysql
 import datetime
 

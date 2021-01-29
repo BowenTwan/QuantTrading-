@@ -1,3 +1,9 @@
+'''
+used to calcualte indicator base on vol open close high low
+this will append the indicators columns at the end of original dataframe
+the output is used to select out backtesting stock pool base on calculated some indicators
+'''
+
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 import os.path  # manage the file path

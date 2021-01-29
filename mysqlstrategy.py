@@ -1,8 +1,14 @@
+'''
+Data source: MySql
+Num of backtesting stock: one 
+'''
+
+
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
 import datetime  # For datetime objects
-from Strategies.MA20crossover import TestStrategy
+from Strategies.MovingSell import MovingSell
 
 
 # Import the backtrader platform
@@ -24,7 +30,7 @@ if __name__ == '__main__':
     #     maperiod=range(10, 31)
     #     )
 
-    cerebro.addstrategy(TestStrategy)
+    cerebro.addstrategy(MovingSell)
 
 
     # Create a Data Feed for general cvs

@@ -13,6 +13,7 @@ class SmaCross(bt.Strategy):
         pstake = 1000 # trading size
     )
     def __init__(self):
+        self.log_file = open('position_log.txt', 'w') # create log file to save postion information
         self.inds = dict()
         for i, d in enumerate(self.datas):
             self.inds[d] = dict()
@@ -34,4 +35,18 @@ class SmaCross(bt.Strategy):
                 if self.inds[d]['cross'] > 0:                #* buy signal
                     self.buy(data = d, size = self.p.pstake) 
             elif self.inds[d]['cross'] < 0:                  #* sell signal 
-                self.close(data = d)   
+                self.close(data = d)  
+                
+        # print out position information 
+        print('*****************************************************************************', file = self.log_file)
+        print(self.data.datetime.date(), file = self.log_file)
+        for i, d in enumerate(self.datas):
+            pos = self.getposition(d)
+            if len(pos):
+                print('{}, 持仓:{}, 成本价:{}, 当前价:{}, 盈亏:{:.2f}'.format(
+                    d._name, pos.size, pos.price, pos.adjbase, pos.size * (pos.adjbase - pos.price)),
+                     file = self.log_file)
+
+    def stop(self):
+        self.log_file.close()
+        pass
