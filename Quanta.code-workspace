@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "."
+		},
+		{
+			"path": "../../../2150_MachineLearn/StockML"
 		}
 	],
 	"settings": {
